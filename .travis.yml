@@ -10,7 +10,7 @@ language: java
 jdk:
  - oraclejdk11
  
- #mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
 
 # Each job in Travis CI has several steps:
 # https://docs.travis-ci.com/user/job-lifecycle/
@@ -21,4 +21,6 @@ jdk:
 # This is to enable CodeCov's coverage
 # If a build is successful, the code is submitted for coverage analysis
 after_success:
+ mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
 #  - bash <(curl -s https://codecov.io/bash)
