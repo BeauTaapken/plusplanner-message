@@ -21,10 +21,14 @@ branches:
 # We use the defaults for installing dependencies, compiling and testing maven applications
 # In our case it will be 'mvn install' followed by 'mvn test'
 
-install: true
+script:
+ -mvn clean package
+
+install: 
+ - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
- -mvn clean package mvn install -Dmaven.javadoc.skip=true -B -V mvn test -B
+ -mvn test -B
 
 # This is to enable CodeCov's coverage
 # If a build is successful, the code is submitted for coverage analysis
