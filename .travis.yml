@@ -10,11 +10,6 @@ language: java
 jdk:
  - oraclejdk11
 
-# Ths tells to travis which branches it is should build when a new push has been made.
-branches:
- only:
-  - master
-
 script:
  - mvn clean package
 
