@@ -23,6 +23,13 @@ script:
 # This is to enable CodeCov's coverage
 # If a build is successful, the code is submitted for coverage analysis
 after_success:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh success $WEBHOOK_URL
+after_failure:
+  - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh
+  - chmod +x send.sh
+  - ./send.sh failure $WEBHOOK_URL
  
 
 #  - bash <(curl -s https://codecov.io/bash)
