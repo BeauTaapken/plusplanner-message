@@ -24,11 +24,11 @@ branches:
 script:
  - mvn clean package
 
-install: 
- - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+# install: 
+#  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
-script:
- - mvn test -B
+# script:
+#  - mvn test -B
 
 # This is to enable CodeCov's coverage
 # If a build is successful, the code is submitted for coverage analysis
