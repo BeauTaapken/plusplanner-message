@@ -28,7 +28,7 @@ before_install:
 script: "./mvnw --show-version --errors --batch-mode -Prun-its clean verify"
 
 script:
- - bundle exec rake test
+ - src exec rake test
 
 # Each job in Travis CI has several steps:
 # https://docs.travis-ci.com/user/job-lifecycle/
