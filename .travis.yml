@@ -2,15 +2,32 @@
 # https://docs.travis-ci.com/user/languages/java/
 
 # This enables the 'defaults' to test java applications:
-language: bash
+language: java
 
-sudo: required
-
+# We can specify a list of JDKs to be used for testing
+# A list of available JDKs in Trusty can be seed in:
+# https://docs.travis-ci.com/user/reference/trusty/#jvm-clojure-groovy-java-scala-images
+jdk:
+ - oraclejdk11
+ 
 services:
-  - docker
+ - docker
 
-script:
-  - docker run -it -v $(pwd):/root/sources -w /root/sources maven:3.3.9-jdk-11 mvn clean install
+env:
+  - MAVEN_VERSION=3.3.9
+install:
+  - "mvn -N io.takari:maven:wrapper -Dmaven=${MAVEN_VERSION}"
+  - "./mvnw --show-version --errors --batch-mode test-compile dependency:go-offline"
+  
+before_install:
+- docker pull carlad/sinatra
+- docker run -d -p 127.0.0.1:80:4567 carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec foreman start;"
+- docker ps -a
+- docker run carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec rake test"
+  
+script: "./mvnw --show-version --errors --batch-mode -Prun-its clean verify"
+
+script: - bundle exec rake test
 
 # Each job in Travis CI has several steps:
 # https://docs.travis-ci.com/user/job-lifecycle/
