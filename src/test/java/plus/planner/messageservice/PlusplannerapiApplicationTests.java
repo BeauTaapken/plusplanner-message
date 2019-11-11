@@ -1,4 +1,4 @@
-package plus.planner.api.plusplannerapi;
+package plus.planner.messageservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
