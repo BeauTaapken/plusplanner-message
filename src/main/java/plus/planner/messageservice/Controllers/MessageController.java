@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequestMapping("message")
 @RestController
@@ -41,8 +40,7 @@ public class MessageController {
 
     @RequestMapping(path = "/read/{channelid}")
     public List<Message> readMessage(@PathVariable Long channelid) {
-        List<Message> messages = messageRepo.findAll();
-        messages = messages.stream().filter(x -> x.getChannelid() == channelid).collect(Collectors.toList());
+        List<Message> messages = messageRepo.findByChannelId(channelid);
         return messages;
     }
 
