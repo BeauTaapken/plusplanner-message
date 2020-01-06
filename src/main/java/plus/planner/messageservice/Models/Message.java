@@ -20,12 +20,12 @@ import javax.validation.constraints.Null;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long messageid;
+    private String messageid;
     @Null
     @JsonIgnore
-    private Long channelid;
+    private String channelid;
     @NotNull
-    private Long userid;
+    private String userid;
     @NotBlank
     private String content;
     @NotBlank

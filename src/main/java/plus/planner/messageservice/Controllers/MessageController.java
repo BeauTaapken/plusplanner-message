@@ -1,60 +1,51 @@
 package plus.planner.messageservice.Controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import plus.planner.messageservice.Models.Message;
 import plus.planner.messageservice.Repository.MessageRepository;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RequestMapping("message")
 @RestController
 public class MessageController {
+    private final Logger logger = LoggerFactory.getLogger(MessageController.class);
+    private final MessageRepository messageRepo;
+
     @Autowired
-    private MessageRepository messageRepo;
-    private ObjectMapper mapper;
-    private SimpleDateFormat formatter;
-
-    MessageController() {
-        mapper = new ObjectMapper();
-        formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+    public MessageController(MessageRepository messageRepo) {
+        this.messageRepo = messageRepo;
     }
 
-    @RequestMapping(path = "/create/{message}")
-    public void createMessage(@PathVariable String message) {
-        try {
-            Message m = mapper.readValue(message, Message.class);
-            m.setSenddate((new Date(System.currentTimeMillis()).toString()));
-            m.setUserid((long)0);
-            messageRepo.save(m);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public void createMessage(@RequestBody Message message) {
+        logger.info("saving message: " + message.getMessageid());
+        messageRepo.save(message);
+        logger.info("saved message");
     }
 
-    @RequestMapping(path = "/read/{channelid}")
-    public List<Message> readMessage(@PathVariable Long channelid) {
-        List<Message> messages = messageRepo.findByChannelId(channelid);
+    @RequestMapping(path = "/read/{channelid}", method = RequestMethod.GET)
+    public List<Message> readMessage(@PathVariable String channelid) {
+        logger.info("getting messages for channelid: " + channelid);
+        final List<Message> messages = messageRepo.findByChannelId(channelid);
+        logger.info("returning messages");
         return messages;
     }
 
-    @RequestMapping(path = "/update/{message}")
-    public void updateMessage(@PathVariable String message) {
-        try {
-            messageRepo.save(mapper.readValue(message, Message.class));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    public void updateMessage(@RequestBody Message message) {
+        logger.info("updating message: " + message.getMessageid());
+        messageRepo.save(message);
+        logger.info("updated message");
     }
 
-    @RequestMapping(path = "/delete/{messageid}")
-    public void deleteSubPart(@PathVariable Long messageid){
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public void deleteSubPart(@RequestBody String messageid) {
+        logger.info("deleting message: " + messageid);
         messageRepo.deleteById(messageid);
+        logger.info("deleted message");
     }
 }

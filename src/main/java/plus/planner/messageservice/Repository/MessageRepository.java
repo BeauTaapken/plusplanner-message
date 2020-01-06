@@ -9,7 +9,7 @@ import plus.planner.messageservice.Models.Message;
 import java.util.List;
 
 @Repository
-public interface MessageRepository extends JpaRepository<Message, Long> {
+public interface MessageRepository extends JpaRepository<Message, String> {
     @Query("SELECT m FROM Message m WHERE m.channelid = :channelid")
-    List<Message> findByChannelId(@Param("channelid") Long channelid);
+    List<Message> findByChannelId(@Param("channelid") String channelid);
 }
