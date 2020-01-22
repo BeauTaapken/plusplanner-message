@@ -20,14 +20,14 @@ public class MessageController {
         this.messageRepo = messageRepo;
     }
 
-    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    @PostMapping(path = "/create")
     public void createMessage(@RequestBody Message message) {
         logger.info("saving message: " + message.getMessageid());
         messageRepo.save(message);
         logger.info("saved message");
     }
 
-    @RequestMapping(path = "/read/{channelid}", method = RequestMethod.GET)
+    @GetMapping(path = "/read/{channelid}")
     public List<Message> readMessage(@PathVariable String channelid) {
         logger.info("getting messages for channelid: " + channelid);
         final List<Message> messages = messageRepo.findByChannelId(channelid);
@@ -35,14 +35,14 @@ public class MessageController {
         return messages;
     }
 
-    @RequestMapping(path = "/update", method = RequestMethod.POST)
+    @PostMapping(path = "/update")
     public void updateMessage(@RequestBody Message message) {
         logger.info("updating message: " + message.getMessageid());
         messageRepo.save(message);
         logger.info("updated message");
     }
 
-    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    @PostMapping(path = "/delete")
     public void deleteSubPart(@RequestBody String messageid) {
         logger.info("deleting message: " + messageid);
         messageRepo.deleteById(messageid);
