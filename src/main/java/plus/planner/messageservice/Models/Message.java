@@ -19,15 +19,9 @@ import javax.validation.constraints.Null;
 @EntityListeners(AuditingEntityListener.class)
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String messageid;
-    @Null
-    @JsonIgnore
     private String channelid;
-    @NotNull
     private String userid;
-    @NotBlank
     private String content;
-    @NotBlank
     private String senddate;
 }
