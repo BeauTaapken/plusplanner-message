@@ -1,4 +1,4 @@
-package plus.planner.messageservice.Controllers;
+package plus.planner.messageservice.controllers;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
