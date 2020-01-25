@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest
-public class PlusplannerapiApplicationTests {
+public class PlusplannermessageApplicationTests {
     private final Gson gson = new Gson();
 
     private MockMvc mockMvc;
